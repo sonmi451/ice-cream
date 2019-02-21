@@ -22,14 +22,14 @@ def setupRotors():
     rotor2=[]
     for x in range (0,26):
         positionx = [alphabet[x],x,alpha2[x]]
-        rotor2.append(positionx)	
+        rotor2.append(positionx)
 
     #set up rotor3
     rotor3=[]
     for x in range (0,26):
         positionx = [alphabet[x],x,alpha3[x]]
         rotor3.append(positionx)
-        
+
     #set up rotor4
     rotor4=[]
     for x in range (0,26):
@@ -41,11 +41,11 @@ def setupRotors():
     for x in range (0,26):
         positionx = [alphabet[x],backwards[x]]
         reflector.append(positionx)
-    
+
     #return rotors
     return rotor1, rotor2, rotor3, rotor4, reflector, numberedAlphabet
-    
-def chooseRotors(rotor1,rotor2,rotor3,rotor4):
+
+def chooseRotors(rotor1,rotor2,rotor3,rotor4, reflector, numberedAlphabet):
     #starting rotors
     rotorName = [rotor1,rotor2,rotor3,rotor4]
     rotorIdentifier = [1,2,3,4]
@@ -57,19 +57,19 @@ def chooseRotors(rotor1,rotor2,rotor3,rotor4):
 
     #starting rotor positions
     print("select today's starting letters")
-    start_position1=numberedAlphabet[input("Position 1:")]
-    start_position2=numberedAlphabet[input("Position 2:")]
-    start_position3=numberedAlphabet[input("Position 3:")]
+    start_position1=numberedAlphabet[raw_input("Position 1:")]
+    start_position2=numberedAlphabet[raw_input("Position 2:")]
+    start_position3=numberedAlphabet[raw_input("Position 3:")]
     return rotorA, rotorB, rotorC, start_position1, start_position2, start_position3
-    
+
 def plaintextInput():
     #setup plaintext
-    message = input("plaintext message to encode: ")
+    message = raw_input("plaintext message to encode: ")
     message = message.lower()
     plaintext = [i for i in message if i not in [' ','.',',','!','?']]
     print("plaintext is:", ''.join(plaintext))
     return plaintext
-    
+
 def enigmafy(rotorA, rotorB, rotorC, start_position1, start_position2, start_position3, plaintext):
     ciphertext=[]
     #steps through the rotor positions depending on length of plaintext
@@ -128,15 +128,15 @@ def enigmafy(rotorA, rotorB, rotorC, start_position1, start_position2, start_pos
                 #print(rotorA[i])
                 scramble6 = rotorA[i][0]
         #print(7, scramble5, "becomes", scramble6)
-        
-        
+
+
         ciphertext.append(scramble6)
     #print(ciphertext)
     print("ciphertext is:", ''.join(ciphertext))
     return ciphertext
 
 def encodeMessage(rotorA, rotorB, rotorC, start_position1, start_position2, start_position3):
-    encodeMsg = input('message to encode? y/n')
+    encodeMsg = raw_input('message to encode? y/n')
     if encodeMsg is 'y':
         plaintext = plaintextInput()
         ciphertext = enigmafy(rotorA, rotorB, rotorC, start_position1, start_position2, start_position3, plaintext)
@@ -147,8 +147,7 @@ def encodeMessage(rotorA, rotorB, rotorC, start_position1, start_position2, star
         encodeMessage(rotorA, rotorB, rotorC, start_position1, start_position2, start_position3)
 
 
-        
-input('Setup the Rotors')    
+# input('Setup the Rotors')
 rotor1, rotor2, rotor3, rotor4, reflector, numberedAlphabet = setupRotors()
-rotorA, rotorB, rotorC, start_position1, start_position2, start_position3 = chooseRotors(rotor1,rotor2,rotor3,rotor4)
+rotorA, rotorB, rotorC, start_position1, start_position2, start_position3 = chooseRotors(rotor1,rotor2,rotor3,rotor4,reflector, numberedAlphabet)
 encodeMessage(rotorA, rotorB, rotorC, start_position1, start_position2, start_position3)
